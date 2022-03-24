@@ -6,7 +6,7 @@ enum ResponseType {
 }
 
 class FunctionInvokeOptions {
-  Map<String, dynamic>? headers;
+  Map<String, String>? headers;
   dynamic body;
   ResponseType? responseType;
 
@@ -14,5 +14,15 @@ class FunctionInvokeOptions {
     this.headers,
     this.body,
     this.responseType,
+  });
+}
+
+class FunctionResponse {
+  dynamic data;
+  Object? error;
+
+  FunctionResponse({
+    this.data,
+    this.error,
   });
 }
