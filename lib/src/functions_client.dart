@@ -31,14 +31,14 @@ class FunctionsClient {
   ///
   /// `responseType`: how the response should be parsed. The default is `json`
   Future<FunctionResponse> invoke(
-    String functionName,
+    String functionName, [
     FunctionInvokeOptions? invokeOptions,
-  ) async {
+  ]) async {
     try {
       final headers = invokeOptions?.headers ?? {};
       final body = invokeOptions?.body ?? {};
       final response = await http.post(
-        Uri.parse(_url),
+        Uri.parse('$_url/$functionName'),
         headers: <String, String>{..._headers, ...headers},
         body: body,
       );
