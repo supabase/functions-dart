@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:functions_dart/src/types.dart';
+import 'package:functions/src/types.dart';
 import 'package:http/http.dart' as http;
 
 class FunctionsClient {
