@@ -6,10 +6,8 @@ import 'package:http/http.dart' as http;
 class FunctionsClient {
   final String _url;
   final Map<String, String> _headers;
-  FunctionsClient({
-    required String url,
-    required Map<String, String> headers,
-  })  : _url = url,
+  FunctionsClient(String url, Map<String, String> headers)
+      : _url = url,
         _headers = headers;
 
   /// Updates the authorization header
