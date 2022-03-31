@@ -21,29 +21,26 @@ class FunctionsClient {
   ///
   /// [functionName] - the name of the function to invoke
   ///
-  /// [invokeOptions] - object with the following properties
+  /// [headers]: object representing the headers to send with the request
   ///
-  /// `headers`: object representing the headers to send with the request
+  /// [body]: the body of the request
   ///
-  /// `body`: the body of the request
-  ///
-  /// `responseType`: how the response should be parsed. The default is `json`
+  /// [responseType]: how the response should be parsed. The default is `json`
   Future<FunctionResponse> invoke(
-    String functionName, [
-    FunctionInvokeOptions? invokeOptions,
-  ]) async {
+    String functionName, {
+    Map<String, String>? headers,
+    Map<String, dynamic>? body,
+    ResponseType responseType = ResponseType.json,
+  }) async {
     try {
-      final headers = invokeOptions?.headers ?? {};
-      final body = invokeOptions?.body ?? {};
       final response = await http.post(
         Uri.parse('$_url/$functionName'),
-        headers: <String, String>{..._headers, ...headers},
+        headers: <String, String>{..._headers, if (headers != null) ...headers},
         body: body,
       );
 
       dynamic data;
-      final responseType = invokeOptions?.responseType;
-      if (responseType == null || responseType == ResponseType.json) {
+      if (responseType == ResponseType.json) {
         data = json.decode(response.body);
       } else if (responseType == ResponseType.blob) {
         data = response.bodyBytes;
