@@ -23,13 +23,16 @@ class FunctionsClient {
   ///
   /// [headers]: object representing the headers to send with the request
   ///
-  /// [body]: the body of the request
+  /// [body]: the body of the request that can be either:
+  ///     - json string. ex: json.encode(..)
+  ///     - list of <int>. ex: [1,2,3]
+  ///     - a map of <String, String>. ex: {"title": title, "body": body}
   ///
   /// [responseType]: how the response should be parsed. The default is `json`
   Future<FunctionResponse> invoke(
     String functionName, {
     Map<String, String>? headers,
-    Map<String, dynamic>? body,
+    dynamic? body,
     ResponseType responseType = ResponseType.json,
   }) async {
     try {
