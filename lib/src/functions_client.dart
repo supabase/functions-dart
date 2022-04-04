@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:functions_client/src/types.dart';
+import 'package:functions_client/src/version.dart';
 import 'package:http/http.dart' as http;
 
 class FunctionsClient {
@@ -35,8 +36,13 @@ class FunctionsClient {
     try {
       final response = await http.post(
         Uri.parse('$_url/$functionName'),
-        headers: <String, String>{..._headers, if (headers != null) ...headers},
-        body: body,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'X-Client-Info': 'functions-dart/$version',
+          ..._headers,
+          if (headers != null) ...headers
+        },
+        body: jsonEncode(body),
       );
 
       dynamic data;

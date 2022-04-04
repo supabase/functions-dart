@@ -1,5 +1,9 @@
 ## [0.0.1-dev.3]
 
+- fix: Fix a bug where json is not properly encoded.
+
+## [0.0.1-dev.3]
+
 - BREAKIMG: 'body', 'headers', and `responseType` are now named parameters of `invoke()`.
 
 ## [0.0.1-dev.2]
