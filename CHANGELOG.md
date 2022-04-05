@@ -1,6 +1,7 @@
 ## [0.0.1-dev.3]
 
 - fix: Fix a bug where json is not properly encoded.
+- fix: Set default headers with X-Client-Info. 
 
 ## [0.0.1-dev.3]
 

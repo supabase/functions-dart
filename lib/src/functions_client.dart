@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:functions_client/src/constants.dart';
 import 'package:functions_client/src/types.dart';
-import 'package:functions_client/src/version.dart';
 import 'package:http/http.dart' as http;
 
 class FunctionsClient {
@@ -9,7 +9,7 @@ class FunctionsClient {
   final Map<String, String> _headers;
   FunctionsClient(String url, Map<String, String> headers)
       : _url = url,
-        _headers = headers;
+        _headers = {...Constants.defaultHeaders, ...headers};
 
   /// Updates the authorization header
   ///
@@ -36,12 +36,7 @@ class FunctionsClient {
     try {
       final response = await http.post(
         Uri.parse('$_url/$functionName'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'X-Client-Info': 'functions-dart/$version',
-          ..._headers,
-          if (headers != null) ...headers
-        },
+        headers: <String, String>{..._headers, if (headers != null) ...headers},
         body: jsonEncode(body),
       );
 
