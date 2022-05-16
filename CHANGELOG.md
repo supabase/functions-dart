@@ -1,7 +1,11 @@
-## [0.0.1-dev.3]
+## [0.0.1-dev.5]
+
+- fix: Change the minimul SDK version to 2.12.0
+
+## [0.0.1-dev.4]
 
 - fix: Fix a bug where json is not properly encoded.
-- fix: Set default headers with X-Client-Info. 
+- fix: Set default headers with X-Client-Info.
 
 ## [0.0.1-dev.3]
 
