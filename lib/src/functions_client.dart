@@ -7,9 +7,15 @@ import 'package:http/http.dart' as http;
 class FunctionsClient {
   final String _url;
   final Map<String, String> _headers;
-  FunctionsClient(String url, Map<String, String> headers)
-      : _url = url,
-        _headers = {...Constants.defaultHeaders, ...headers};
+  final http.Client? _httpClient;
+
+  FunctionsClient(
+    String url,
+    Map<String, String> headers, {
+    http.Client? httpClient,
+  })  : _url = url,
+        _headers = {...Constants.defaultHeaders, ...headers},
+        _httpClient = httpClient;
 
   /// Updates the authorization header
   ///
@@ -34,13 +40,13 @@ class FunctionsClient {
     ResponseType responseType = ResponseType.json,
   }) async {
     try {
-      final response = await http.post(
+      final response = await (_httpClient?.post ?? http.post)(
         Uri.parse('$_url/$functionName'),
         headers: <String, String>{..._headers, if (headers != null) ...headers},
         body: jsonEncode(body),
       );
 
-      dynamic data;
+      final dynamic data;
       if (responseType == ResponseType.json) {
         data = json.decode(response.body);
       } else if (responseType == ResponseType.blob) {
@@ -52,7 +58,7 @@ class FunctionsClient {
       } else {
         data = response.body;
       }
-      return FunctionResponse(data: data);
+      return FunctionResponse(data: data, status: response.statusCode);
     } catch (error) {
       return FunctionResponse(error: error);
     }
