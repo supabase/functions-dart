@@ -1,3 +1,7 @@
+## [1.0.0-dev.2]
+
+- feat: use isolates for json encoding/decoding
+
 ## [1.0.0-dev.1]
 
 - chore: Update lints to v2.0.0
