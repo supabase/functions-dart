@@ -4,6 +4,8 @@ import 'package:functions_client/src/constants.dart';
 import 'package:functions_client/src/types.dart';
 import 'package:http/http.dart' as http;
 
+import 'isolates.dart';
+
 class FunctionsClient {
   final String _url;
   final Map<String, String> _headers;
@@ -40,15 +42,17 @@ class FunctionsClient {
     ResponseType responseType = ResponseType.json,
   }) async {
     try {
+      final bodyStr = await compute(json.encode, body);
+
       final response = await (_httpClient?.post ?? http.post)(
         Uri.parse('$_url/$functionName'),
         headers: <String, String>{..._headers, if (headers != null) ...headers},
-        body: jsonEncode(body),
+        body: bodyStr,
       );
 
       final dynamic data;
       if (responseType == ResponseType.json) {
-        data = json.decode(response.body);
+        data = await compute(json.decode, response.body);
       } else if (responseType == ResponseType.blob) {
         data = response.bodyBytes;
       } else if (responseType == ResponseType.arraybuffer) {
