@@ -1,3 +1,15 @@
+## [1.0.0-dev.3]
+
+- BREAKING: `error` is now thrown instead of being returned within a response
+```dart
+try {
+  final res = await functions.invoke('myFunction');
+  print(res.data);
+} catch (error, stacktrace) {
+  print('$error \n $stracktrace');
+}
+```
+
 ## [1.0.0-dev.2]
 
 - feat: use isolates for json encoding/decoding
