@@ -19,12 +19,10 @@ class FunctionInvokeOptions {
 
 class FunctionResponse {
   final dynamic data;
-  final Object? error;
   final int? status;
 
   FunctionResponse({
     this.data,
-    this.error,
     this.status,
   });
 }
