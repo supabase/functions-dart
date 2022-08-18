@@ -41,30 +41,26 @@ class FunctionsClient {
     Map<String, dynamic>? body,
     ResponseType responseType = ResponseType.json,
   }) async {
-    try {
-      final bodyStr = await compute(json.encode, body);
+    final bodyStr = await compute(json.encode, body);
 
-      final response = await (_httpClient?.post ?? http.post)(
-        Uri.parse('$_url/$functionName'),
-        headers: <String, String>{..._headers, if (headers != null) ...headers},
-        body: bodyStr,
-      );
+    final response = await (_httpClient?.post ?? http.post)(
+      Uri.parse('$_url/$functionName'),
+      headers: <String, String>{..._headers, if (headers != null) ...headers},
+      body: bodyStr,
+    );
 
-      final dynamic data;
-      if (responseType == ResponseType.json) {
-        data = await compute(json.decode, response.body);
-      } else if (responseType == ResponseType.blob) {
-        data = response.bodyBytes;
-      } else if (responseType == ResponseType.arraybuffer) {
-        data = response.bodyBytes;
-      } else if (responseType == ResponseType.text) {
-        data = response.body;
-      } else {
-        data = response.body;
-      }
-      return FunctionResponse(data: data, status: response.statusCode);
-    } catch (error) {
-      return FunctionResponse(error: error);
+    final dynamic data;
+    if (responseType == ResponseType.json) {
+      data = await compute(json.decode, response.body);
+    } else if (responseType == ResponseType.blob) {
+      data = response.bodyBytes;
+    } else if (responseType == ResponseType.arraybuffer) {
+      data = response.bodyBytes;
+    } else if (responseType == ResponseType.text) {
+      data = response.body;
+    } else {
+      data = response.body;
     }
+    return FunctionResponse(data: data, status: response.statusCode);
   }
 }
