@@ -41,7 +41,7 @@ class FunctionsClient {
     Map<String, dynamic>? body,
     ResponseType responseType = ResponseType.json,
   }) async {
-    final bodyStr = await compute(json.encode, body);
+    final bodyStr = body == null ? null : await compute(json.encode, body);
 
     final response = await (_httpClient?.post ?? http.post)(
       Uri.parse('$_url/$functionName'),
