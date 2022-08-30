@@ -1,3 +1,7 @@
+## [1.0.0-dev.4]
+
+- fix: Support null body when invoking functions
+
 ## [1.0.0-dev.3]
 
 - BREAKING: `error` is now thrown instead of being returned within a response
