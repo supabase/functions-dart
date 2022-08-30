@@ -41,7 +41,7 @@ class FunctionsClient {
     Map<String, dynamic>? body,
     ResponseType responseType = ResponseType.json,
   }) async {
-    final bodyStr = await compute(json.encode, body);
+    final bodyStr = body == null ? null : await compute(json.encode, body);
 
     final response = await (_httpClient?.post ?? http.post)(
       Uri.parse('$_url/$functionName'),
@@ -51,7 +51,8 @@ class FunctionsClient {
 
     final dynamic data;
     if (responseType == ResponseType.json) {
-      data = await compute(json.decode, response.body);
+      final resBody = response.body;
+      data = resBody.isEmpty ? resBody : await compute(json.decode, resBody);
     } else if (responseType == ResponseType.blob) {
       data = response.bodyBytes;
     } else if (responseType == ResponseType.arraybuffer) {
