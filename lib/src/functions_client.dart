@@ -51,8 +51,8 @@ class FunctionsClient {
 
     final dynamic data;
     if (responseType == ResponseType.json) {
-      final body = response.body;
-      data = body?.isEmpty ?? true ? null : await compute(json.decode, body);
+      final resBody = response.body;
+      data = resBody.isEmpty ? null : await compute(json.decode, resBody);
     } else if (responseType == ResponseType.blob) {
       data = response.bodyBytes;
     } else if (responseType == ResponseType.arraybuffer) {
