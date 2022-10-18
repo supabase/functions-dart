@@ -1,6 +1,7 @@
-## [1.0.0-dev.4]
+## [1.0.0]
 
-- fix: Support null body when invoking functions
+- chore: stable v1.0.0 release 🚀
+- BREAKING: set minimum SDK version to 2.15.0
 
 ## [1.0.0-dev.3]
 
