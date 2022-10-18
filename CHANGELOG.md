@@ -1,6 +1,6 @@
 ## [1.0.0]
 
-- chore: stable v1.0.0 release 🚀
+- chore: v1.0.0 release 🚀
 - BREAKING: set minimum SDK version to 2.15.0
 
 ## [1.0.0-dev.4]
