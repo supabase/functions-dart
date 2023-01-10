@@ -1,3 +1,7 @@
+## [1.0.1]
+
+- fix: use yet_another_json_isolate for json encoding/decoding
+
 ## [1.0.0]
 
 - chore: v1.0.0 release 🚀
