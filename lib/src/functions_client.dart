@@ -1,22 +1,22 @@
-import 'dart:convert';
-
 import 'package:functions_client/src/constants.dart';
 import 'package:functions_client/src/types.dart';
 import 'package:http/http.dart' as http;
-
-import 'isolates.dart';
+import 'package:yet_another_json_isolate/yet_another_json_isolate.dart';
 
 class FunctionsClient {
   final String _url;
   final Map<String, String> _headers;
   final http.Client? _httpClient;
+  final YAJsonIsolate _isolate;
 
   FunctionsClient(
     String url,
     Map<String, String> headers, {
     http.Client? httpClient,
+    YAJsonIsolate? isolate,
   })  : _url = url,
         _headers = {...Constants.defaultHeaders, ...headers},
+        _isolate = isolate ?? (YAJsonIsolate()..initialize()),
         _httpClient = httpClient;
 
   /// Updates the authorization header
@@ -41,7 +41,7 @@ class FunctionsClient {
     Map<String, dynamic>? body,
     ResponseType responseType = ResponseType.json,
   }) async {
-    final bodyStr = body == null ? null : await compute(json.encode, body);
+    final bodyStr = body == null ? null : await _isolate.encode(body);
 
     final response = await (_httpClient?.post ?? http.post)(
       Uri.parse('$_url/$functionName'),
@@ -52,7 +52,7 @@ class FunctionsClient {
     final dynamic data;
     if (responseType == ResponseType.json) {
       final resBody = response.body;
-      data = resBody.isEmpty ? resBody : await compute(json.decode, resBody);
+      data = resBody.isEmpty ? resBody : await _isolate.decode(resBody);
     } else if (responseType == ResponseType.blob) {
       data = response.bodyBytes;
     } else if (responseType == ResponseType.arraybuffer) {
