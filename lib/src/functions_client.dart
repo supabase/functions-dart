@@ -68,6 +68,7 @@ class FunctionsClient {
     return FunctionResponse(data: data, status: response.statusCode);
   }
 
+  /// Disposes the isolate for json encoding/decoding
   Future<void> dispose() async {
     if (!_hasCustomIsolate) {
       return _isolate.dispose();
