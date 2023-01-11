@@ -8,7 +8,9 @@ class FunctionsClient {
   final Map<String, String> _headers;
   final http.Client? _httpClient;
   final YAJsonIsolate _isolate;
+  final bool _hasCustomIsolate;
 
+  /// In case you don't provide your own isolate, call [dispose] when you're done
   FunctionsClient(
     String url,
     Map<String, String> headers, {
@@ -17,6 +19,7 @@ class FunctionsClient {
   })  : _url = url,
         _headers = {...Constants.defaultHeaders, ...headers},
         _isolate = isolate ?? (YAJsonIsolate()..initialize()),
+        _hasCustomIsolate = isolate != null,
         _httpClient = httpClient;
 
   /// Updates the authorization header
@@ -63,5 +66,11 @@ class FunctionsClient {
       data = response.body;
     }
     return FunctionResponse(data: data, status: response.statusCode);
+  }
+
+  Future<void> dispose() async {
+    if (!_hasCustomIsolate) {
+      return _isolate.dispose();
+    }
   }
 }
