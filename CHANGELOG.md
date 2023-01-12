@@ -1,3 +1,7 @@
+## [1.0.2]
+
+- fix: add `await functions.dispose()` method to dispose yet_another_json_isolate instance
+
 ## [1.0.1]
 
 - fix: use yet_another_json_isolate for json encoding/decoding
