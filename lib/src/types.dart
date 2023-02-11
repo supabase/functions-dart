@@ -5,6 +5,14 @@ enum ResponseType {
   blob,
 }
 
+enum HttpMethod {
+  get,
+  post,
+  put,
+  delete,
+  patch,
+}
+
 class FunctionInvokeOptions {
   final Map<String, String>? headers;
   final dynamic body;

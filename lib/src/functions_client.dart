@@ -1,6 +1,7 @@
 import 'package:functions_client/src/constants.dart';
 import 'package:functions_client/src/types.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:yet_another_json_isolate/yet_another_json_isolate.dart';
 
 class FunctionsClient {
@@ -42,15 +43,67 @@ class FunctionsClient {
     String functionName, {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
+    HttpMethod method = HttpMethod.post,
     ResponseType responseType = ResponseType.json,
   }) async {
     final bodyStr = body == null ? null : await _isolate.encode(body);
 
-    final response = await (_httpClient?.post ?? http.post)(
-      Uri.parse('$_url/$functionName'),
-      headers: <String, String>{..._headers, if (headers != null) ...headers},
-      body: bodyStr,
-    );
+    late final Response response;
+
+    switch (method) {
+      case HttpMethod.post:
+        response = await (_httpClient?.post ?? http.post)(
+          Uri.parse('$_url/$functionName'),
+          headers: <String, String>{
+            ..._headers,
+            if (headers != null) ...headers
+          },
+          body: bodyStr,
+        );
+        break;
+
+      case HttpMethod.get:
+        response = await (_httpClient?.get ?? http.get)(
+          Uri.parse('$_url/$functionName'),
+          headers: <String, String>{
+            ..._headers,
+            if (headers != null) ...headers
+          },
+        );
+        break;
+
+      case HttpMethod.put:
+        response = await (_httpClient?.put ?? http.put)(
+          Uri.parse('$_url/$functionName'),
+          headers: <String, String>{
+            ..._headers,
+            if (headers != null) ...headers
+          },
+          body: bodyStr,
+        );
+        break;
+
+      case HttpMethod.delete:
+        response = await (_httpClient?.delete ?? http.delete)(
+          Uri.parse('$_url/$functionName'),
+          headers: <String, String>{
+            ..._headers,
+            if (headers != null) ...headers
+          },
+        );
+        break;
+
+      case HttpMethod.patch:
+        response = await (_httpClient?.patch ?? http.patch)(
+          Uri.parse('$_url/$functionName'),
+          headers: <String, String>{
+            ..._headers,
+            if (headers != null) ...headers
+          },
+          body: bodyStr,
+        );
+        break;
+    }
 
     final dynamic data;
     if (responseType == ResponseType.json) {
