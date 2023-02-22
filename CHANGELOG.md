@@ -1,3 +1,7 @@
+## [1.1.0]
+
+- feat: add `method` parameter to `invoke()` to support all GET, POST, PUT, PATCH, DELETE methods
+
 ## [1.0.2]
 
 - fix: add `await functions.dispose()` method to dispose yet_another_json_isolate instance
