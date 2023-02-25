@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:functions_client/src/constants.dart';
 import 'package:functions_client/src/types.dart';
 import 'package:http/http.dart' as http;
@@ -49,57 +51,48 @@ class FunctionsClient {
     final bodyStr = body == null ? null : await _isolate.encode(body);
 
     late final Response response;
+    final uri = Uri.parse('$_url/$functionName');
+
+    final finalHeaders = <String, String>{
+      ..._headers,
+      if (headers != null) ...headers
+    };
 
     switch (method) {
       case HttpMethod.post:
         response = await (_httpClient?.post ?? http.post)(
-          Uri.parse('$_url/$functionName'),
-          headers: <String, String>{
-            ..._headers,
-            if (headers != null) ...headers
-          },
+          uri,
+          headers: finalHeaders,
           body: bodyStr,
         );
         break;
 
       case HttpMethod.get:
         response = await (_httpClient?.get ?? http.get)(
-          Uri.parse('$_url/$functionName'),
-          headers: <String, String>{
-            ..._headers,
-            if (headers != null) ...headers
-          },
+          uri,
+          headers: finalHeaders,
         );
         break;
 
       case HttpMethod.put:
         response = await (_httpClient?.put ?? http.put)(
-          Uri.parse('$_url/$functionName'),
-          headers: <String, String>{
-            ..._headers,
-            if (headers != null) ...headers
-          },
+          uri,
+          headers: finalHeaders,
           body: bodyStr,
         );
         break;
 
       case HttpMethod.delete:
         response = await (_httpClient?.delete ?? http.delete)(
-          Uri.parse('$_url/$functionName'),
-          headers: <String, String>{
-            ..._headers,
-            if (headers != null) ...headers
-          },
+          uri,
+          headers: finalHeaders,
         );
         break;
 
       case HttpMethod.patch:
         response = await (_httpClient?.patch ?? http.patch)(
-          Uri.parse('$_url/$functionName'),
-          headers: <String, String>{
-            ..._headers,
-            if (headers != null) ...headers
-          },
+          uri,
+          headers: finalHeaders,
           body: bodyStr,
         );
         break;
@@ -114,7 +107,7 @@ class FunctionsClient {
     } else if (responseType == ResponseType.arraybuffer) {
       data = response.bodyBytes;
     } else if (responseType == ResponseType.text) {
-      data = response.body;
+      data = utf8.decode(response.bodyBytes);
     } else {
       data = response.body;
     }
