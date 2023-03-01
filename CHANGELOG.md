@@ -1,3 +1,7 @@
+## [1.1.1]
+
+- fix: use utf8 encoding for text response
+
 ## [1.1.0]
 
 - feat: add `method` parameter to `invoke()` to support all GET, POST, PUT, PATCH, DELETE methods
