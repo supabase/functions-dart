@@ -25,6 +25,11 @@ class FunctionsClient {
         _hasCustomIsolate = isolate != null,
         _httpClient = httpClient;
 
+  /// Getter for the headers
+  Map<String, String> get headers {
+    return _headers;
+  }
+
   /// Updates the authorization header
   ///
   /// [token] - the new jwt token sent in the authorisation header
