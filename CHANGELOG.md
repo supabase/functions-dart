@@ -1,3 +1,7 @@
+## [1.2.0]
+
+- feat: expose `headers` getter
+
 ## [1.1.1]
 
 - fix: use utf8 encoding for text response
