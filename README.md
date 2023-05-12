@@ -1,7 +1,7 @@
 # `functions-dart`
 
 > **Warning**
-> This repository has been moved [supabase-flutter repo](https://github.com/supabase/supabase-flutter/tree/main/packages/functions_client).
+> This repository has been moved to the [supabase-flutter repo](https://github.com/supabase/supabase-flutter/tree/main/packages/functions_client).
 
 ## Contributing
 
