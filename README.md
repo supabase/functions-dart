@@ -1,5 +1,8 @@
 # `functions-dart`
 
+> **Warning**
+> This repository has been moved to the [supabase-flutter repo](https://github.com/supabase/supabase-flutter/tree/main/packages/functions_client).
+
 ## Contributing
 
 - Fork the repo on [GitHub](https://github.com/supabase-community/functions-dart)
